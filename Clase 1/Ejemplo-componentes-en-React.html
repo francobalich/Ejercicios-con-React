@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Static Template</title>
+    <style>
+        picture{
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            width: 100px;
+        }
+        img{
+            box-shadow: 0 0 15px #999;
+            border-radius: 50%;
+            width: 100px;
+        }
+        img.disabled{
+            opacity: 0.4;
+        }
+    </style>
+    <!-- Nota: cuando se despliegue, reemplazar "development.js" con "production.min.js". -->
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script> 
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+    <h1>Women in tech</h1>
+    <div id="app">
+    </div>
+    <script type="text/babel">
+        const $app = document.getElementById("app");
+        const useState= React.useState;
+        
+        const Avatar = props =>{
+            const [enabled,setEnabled] = useState(true);
+            const src = `https://randomuser.me/api/portraits/women/${props.id}.jpg`;
+            const className = enabled ? '' : 'disabled';
+            return (
+            <picture>
+                <img 
+                    onClick={()=> setEnabled(!enabled)}
+                    className={className} 
+                    src={src}
+                />
+                <strong>{props.name}</strong>
+            </picture>
+        )};
+        //Render de una sola img
+        //ReactDOM.render(h(Avatar,{id:10}), $app);
+        /*
+        //Render de varias imagenes solo con Js
+        ReactDOM.render(h("div",null,
+        [
+            h(Avatar,{id:10}),
+            h(Avatar,{id:11})
+        ]), $app);
+        */
+       ReactDOM.render(
+            <div>
+                <Avatar id={10} name="Micaela" />
+                <Avatar id={11} name="Ana" />
+            </div>,
+            $app
+       );
+        
+    </script>
+</body>
+</html>
