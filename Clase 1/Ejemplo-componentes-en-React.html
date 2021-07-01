@@ -15,10 +15,28 @@
         img{
             box-shadow: 0 0 15px #999;
             border-radius: 50%;
-            width: 100px;
+            width: 100%;
         }
         img.disabled{
             opacity: 0.4;
+        }
+        i{
+            width: 100%;
+            display: inline-block;
+            border: 1px solid black;
+            border-radius: 50%;
+            min-height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            background-color: #ddd;
+        }
+        picture.is-small{
+            width: 50px;
+        }
+        picture.is-large{
+            width: 200px;
         }
     </style>
     <!-- Nota: cuando se despliegue, reemplazar "development.js" con "production.min.js". -->
@@ -34,19 +52,38 @@
         const $app = document.getElementById("app");
         const useState= React.useState;
         
-        const Avatar = props =>{
+        const Avatar = ({id, name="🤔", size}) =>{
             const [enabled,setEnabled] = useState(true);
-            const src = `https://randomuser.me/api/portraits/women/${props.id}.jpg`;
-            const className = enabled ? '' : 'disabled';
+            const src = `https://randomuser.me/api/portraits/women/${id}.jpg`;
+            const imgClassName = enabled ? '' : 'disabled';
+            let pictureClassName="";
+            if(size==="small") {
+                pictureClassName="is-small";
+            }
+            else if (size==="large") {
+                pictureClassName="is-large";
+            }
+
             return (
-            <picture>
-                <img 
-                    onClick={()=> setEnabled(!enabled)}
-                    className={className} 
-                    src={src}
-                />
-                <strong>{props.name}</strong>
-            </picture>
+                    
+                <picture className={pictureClassName}>
+                    {
+                        id ? (
+                            <img 
+                                onClick={()=> {
+                                    setEnabled(!enabled);
+                                    }}
+                                className={imgClassName} 
+                                src={src}
+                            />
+                        ):
+                        (
+                            <i>Sin imágen</i>
+                        )
+                } 
+                <strong>{enabled ? name:"Desactivada"}</strong>
+                </picture>
+                
         )};
         //Render de una sola img
         //ReactDOM.render(h(Avatar,{id:10}), $app);
@@ -57,12 +94,17 @@
             h(Avatar,{id:10}),
             h(Avatar,{id:11})
         ]), $app);
-        */
+        *//*
+       Avatar.defaultProps={
+           name:"🤔"
+       };*/
        ReactDOM.render(
             <div>
-                <Avatar id={10} name="Micaela" />
+                <Avatar id={10} name="Micaela" size="small"/>
                 <Avatar id={11} name="Ana" />
-            </div>,
+                <Avatar id={12}  size="large"/>
+                <Avatar  name="Maria" size="large"/>
+                </div>,
             $app
        );
         
