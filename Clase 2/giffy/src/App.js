@@ -1,20 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
 
-const GIFS =[
-  'https://media.giphy.com/media/EPcvhM28ER9XW/giphy.gif',
-  'https://media.giphy.com/media/pO1H8mAU7geAw/giphy.gif'
-];
-const DIFFERNTS_GIFS=[
-  'https://media.giphy.com/media/ySVKduoNNFoRy/giphy.gif',
-  'https://media.giphy.com/media/3eTsBTBJaFvJC/giphy.gif'
-];
 function App() {
-  const [gifs, setGifs]=useState(GIFS);
+  const [gifs, setGifs]=useState([]);
 
+  const apiURL='https://api.giphy.com/v1/gifs/search?api_key=VBFqqszK3iB5zlGkAm0iooJjHWSu9rhb&q=panda&limit=25&offset=0&rating=g&lang=en';
   useEffect(()=>{
     console.log("Actualizando los gif");
-    setGifs(DIFFERNTS_GIFS);
+    fetch(apiURL)
+      .then(res=> res.json())
+      .then(response=>{
+        const {data}=response;
+        const gifs = data.map(image=>image.images.downsized_medium.url);
+        setGifs(gifs);
+        console.log(gifs);
+      })
   },[]);
 
   return (
