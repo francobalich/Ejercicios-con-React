@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Gif from "./Gif";
+import getGifs from "../services/getGifs";
 
-export default function ListOfGifs({listOfGifs}) {
-  return listOfGifs.map((singleGif) => (
-        <Gif
-          key={singleGif.id}
-          id={singleGif.id}
-          title={singleGif.title}
-          url={singleGif.url}
-        />
-      )
-      
-  )
+export default function ListOfGifs({ keyword }) {
+  const [gifs, setGifs] = useState([]);
+
+  useEffect(() => {
+    console.log("Actualizando los gif");
+    getGifs({ keyword }).then((gifs) => setGifs(gifs));
+  }, [keyword]);
+
+  return gifs.map((singleGif) => (
+    <Gif
+      key={singleGif.id}
+      id={singleGif.id}
+      title={singleGif.title}
+      url={singleGif.url}
+    />
+  ));
 }
