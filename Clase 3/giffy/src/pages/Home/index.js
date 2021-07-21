@@ -7,7 +7,7 @@ export default function Home() {
   const [path,pushLocation] = useLocation()
 
   const handleSubmit = (evt) => {
-      evt.preventDefault()
+    evt.preventDefault()
     //nav to other rute
     pushLocation(`/search/${keyword}`)
     console.log(keyword);
@@ -19,6 +19,7 @@ export default function Home() {
     <>
       <form onSubmit={handleSubmit}>
         <input onChange={handleChange} type="text" value={keyword} />
+        <button>Buscar</button>
       </form>
       <h3 className="App.title">Los gifs más populares</h3>
       <ul>
