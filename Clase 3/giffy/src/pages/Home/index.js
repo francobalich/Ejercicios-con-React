@@ -26,8 +26,8 @@ export default function Home() {
         {POPULAR_GIFS.map((popularGif) => (
           <li key={popularGif}>
             <Link to={`/search/${popularGif}`}>
-              Gift de
-              {popularGif}
+              Gift de 
+              {" "+popularGif}
             </Link>
           </li>
         ))}
